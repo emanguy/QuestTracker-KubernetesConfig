@@ -1,0 +1,15 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+    name: qt-notification-service-ing
+    namespace: quest-tracker
+    annotations:
+        nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+    rules:
+        - http:
+            paths:
+                - path: /notification
+                  backend:
+                      serviceName: qt-notification-server-service
+                      servicePort: 80

@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+    name: redis-service
+    namespace: quest-tracker
+spec:
+    ports:
+        - name: redis-port
+          port: 6379
+    selector:
+        service: qt-redis-db

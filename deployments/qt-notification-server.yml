@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: qt-notification-server
+    namespace: quest-tracker
+    labels:
+        serviceType: nodejs-server
+
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            service: qt-notifications
+    template:
+        metadata:
+            labels:
+                service: qt-notifications
+        spec:
+            containers:
+                - name: qt-notification-server
+                  image: emanguy/questtracker-notificationservice:1.0.0
+                  env:
+                      - name: REDIS_URL
+                        valueFrom:
+                            configMapKeyRef:
+                                name: redis-config
+                                key: redis-service-url
+                      - name: REDIS_PASSWORD
+                        valueFrom:
+                            secretKeyRef:
+                                name: redis-secret-config
+                                key: redis-service-password
+
