@@ -30,10 +30,15 @@ spec:
         spec:
             containers:
                 - name: notification-service
-                  image: emanguy/questtracker-notificationservice:1.0.1
+                  image: emanguy/questtracker-notificationservice:1.1.0
                   ports:
                       - name: http
                         containerPort: 80
+                  livenessProbe:
+                      httpGet:
+                          path: /healthz
+                          port: 80
+                      initialDelaySeconds: 7
                   envFrom:
                       - secretRef:
                           name: redis-secrets
